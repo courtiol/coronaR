@@ -6,14 +6,15 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
+  dpi = 200,
   out.width = "100%"
 )
 ```
 
 # coronaR
 
-The motivation for such package and the plots it produces is that most
-people don’t know if X deaths caused by something is a lot or not.
+The motivation for such an R package and the plots it produces is that
+most people don’t know if X deaths caused by something is a lot or not.
 Indeed, unless you are a demographer, you probably have no idea how many
 people die in the world or even in your city, over a year, or over a
 day. (If you want to know, a good rule of thumb is that over a given
@@ -52,10 +53,10 @@ The package allows to explore or plot either daily deaths or cumulated
 deaths since a given country had reached a total of 10 deaths. Daily
 deaths are susceptible to vary due to lags in reporting alone. For this
 reason, I try to discount the lump reports from nursing homes when they
-correspond to several days, but I cann keep track of all of them.
+correspond to several days, but I cannot keep track of all of them.
 
 Cumulative deaths are thus probably better since when the deaths are
-being reported maters less.
+being reported matters less.
 
 ### Baseline
 
@@ -63,7 +64,7 @@ When deaths are counted on a daily basis, the baseline is also computed
 on a daily basis.
 
 When deaths are cumulated, the baseline is computed using normal
-mortality that would have occured during the period between the date
+mortality that would have occurred during the period between the date
 when the country reached 10 cumulative total deaths and the date of the
 report being analysed.
 
@@ -72,6 +73,13 @@ either use the most recent mortality data for the same country that is
 analysed (2018), or to use the average mortality data from the entire
 world (which is much higher than the country level one in the healthier
 countries). The choice of the baseline impacts on the ranking.
+
+### Why on Earth can cumulative mortality go down?
+
+It is because the cumulative deaths are expressed relatively to the
+baseline mortality that occurs during the same period. Therefore, if the
+deaths caused by COVID19 pile up more slowly that the normal deaths,
+then the relative measure shown in the plot can go down.
 
 ## Installation
 
@@ -83,13 +91,13 @@ remotes::install_github("courtiol/coronaR")
 
 ## Basic usage
 
-### load the package:
+### Load the package {coronaR}
 
 ``` r
 library(coronaR)
 ```
 
-### create data\_COVID:
+### Create the data with the COVID mortality information
 
 ``` r
 today <- Sys.Date() ## note: you can change the date, to rebuild plots retrospectively
@@ -120,7 +128,10 @@ data_COVID
 #  Some values were not matched unambiguously: XK
 ```
 
-### for daily plots, you may want to remove manually lump report of deaths from nursing homes:
+### Small manual fix for lumped report of deaths
+
+For daily plots, you may want to remove manually lump report of deaths
+from nursing homes:
 
 ``` r
   data_COVID[data_COVID$country == "France" & data_COVID$date_report == "2020-04-04", "deaths_daily"] <- 1120
@@ -128,7 +139,7 @@ data_COVID
   data_COVID[data_COVID$country == "Belgium" & data_COVID$date_report == "2020-04-11", "deaths_daily"] <- 325
 ```
 
-### create data\_baseline\_mortality:
+### Create the data with the baseline mortality information
 
 ``` r
 data_baseline_mortality <- prepare_data_WB() ## the data do sometimes change from day to day!
@@ -151,7 +162,7 @@ data_baseline_mortality
 #> #   total_death_day_world <dbl>, country_pop <dbl>, world_pop <dbl>
 ```
 
-### create the plots:
+### Create the plots:
 
 To look at daily deaths, using the baseline mortality from each country:
 
@@ -169,7 +180,7 @@ plot_deaths(data_ECDC = data_COVID,
 
 <img src="man/figures/README-plot1-1.png" width="100%" />
 
-TO look at daily deaths, using the baseline mortality from the world:
+To look at daily deaths, using the baseline mortality from the world:
 
 ``` r
 plot_deaths(data_ECDC = data_COVID,
@@ -223,7 +234,7 @@ plot_deaths(data_ECDC = data_COVID,
 
 ### Do your own plot
 
-The workhorse function that lead to tidy longitudinal serie is
+The workhorse function that lead to tidy longitudinal series is
 `merge_datasets()`. You can for example use it like that:
 
 ``` r
@@ -336,7 +347,7 @@ class(plot_plot)
 
 There are many limitation that directly stem from the data. For example:
 
-  - some countries (seem to underreport death by COVID19. This is
+  - some countries (seem to under-report death by COVID19. This is
     because for many deaths occurying outside hospitals the exact cause
     of death is not known. (We will be able to look at that when overall
     death rates will be known.)
