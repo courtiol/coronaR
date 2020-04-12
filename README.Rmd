@@ -10,8 +10,10 @@ editor_options:
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
-  dpi = 200,
+  fig.path = "figures/README/",
+  fig.width = 9,
+  fig.height = 6,
+  dpi = 300,
   out.width = "100%"
 )
 ```

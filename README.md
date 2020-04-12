@@ -168,7 +168,7 @@ plot_deaths(data_ECDC = data_COVID,
             title = "Deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline country mortality")
 ```
 
-<img src="man/figures/README-plot1-1.png" width="100%" />
+<img src="figures/README/plot1-1.png" width="100%" />
 
 To look at daily deaths, using the baseline mortality from the world:
 
@@ -184,7 +184,7 @@ plot_deaths(data_ECDC = data_COVID,
             title = "Deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline worldwide mortality")
 ```
 
-<img src="man/figures/README-plot2-1.png" width="100%" />
+<img src="figures/README/plot2-1.png" width="100%" />
 
 To look at cumulative deaths, using the baseline mortality from each
 country:
@@ -201,7 +201,7 @@ plot_deaths(data_ECDC = data_COVID,
             title = "Cumulative deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline country mortality")
 ```
 
-<img src="man/figures/README-plot3-1.png" width="100%" />
+<img src="figures/README/plot3-1.png" width="100%" />
 
 To look at cumulative deaths, using the baseline mortality from the
 world:
@@ -218,7 +218,7 @@ plot_deaths(data_ECDC = data_COVID,
             title = "Cumulative deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline worldwide mortality")
 ```
 
-<img src="man/figures/README-plot4-1.png" width="100%" />
+<img src="figures/README/plot4-1.png" width="100%" />
 
 ## More advanced usage
 
