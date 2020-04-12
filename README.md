@@ -1,16 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-``` r
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  dpi = 200,
-  out.width = "100%"
-)
-```
-
 # coronaR
 
 The motivation for such an R package and the plots it produces is that
@@ -311,8 +301,6 @@ plot_data <- plot_deaths(data_ECDC = data_COVID,
             title = "Deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline mortality")
 ```
 
-<img src="man/figures/README-recover plot_data-1.png" width="100%" />
-
 ``` r
 class(plot_data)
 #> [1] "tbl_df"     "tbl"        "data.frame"
@@ -335,8 +323,6 @@ plot_plot <- plot_deaths(data_ECDC = data_COVID,
             title = "Deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline mortality",
             return_plot = TRUE)
 ```
-
-<img src="man/figures/README-recover plot_plot-1.png" width="100%" />
 
 ``` r
 class(plot_plot)

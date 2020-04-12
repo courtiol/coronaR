@@ -6,7 +6,7 @@ editor_options:
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, isetup, nclude = FALSE}
+```{r, setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -194,7 +194,7 @@ str(full_data)
 
 
 ### Recover the data behind the plot
-```{r, recover plot_data, results=FALSE}
+```{r, recover plot_data, fig.keep="none"}
 plot_data <- plot_deaths(data_ECDC = data_COVID,
             data_WB = data_baseline_mortality,
             type_major = "daily",
@@ -216,7 +216,7 @@ class(plot_data)
 
 Just add `return_plot = TRUE`, when calling `plot_deaths()` and store the output in an object. The object created will be a plot.
 
-```{r, recover plot_plot, results=FALSE}
+```{r, recover plot_plot, fig.keep="none"}
 plot_plot <- plot_deaths(data_ECDC = data_COVID,
             data_WB = data_baseline_mortality,
             type_major = "daily",
