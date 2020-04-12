@@ -1,0 +1,31 @@
+Package: coronaR
+Title: Exploring COVID19 mortality
+Version: 0.0.0.9000
+Authors@R: 
+      person(given = "Alexandre",
+             family = "Courtiol",
+             role = c("aut", "cre"),
+             email = "alexandre.courtiol@gmail.com",
+             comment = c(ORCID = "0000-0003-0637-2959"))
+Description: This package can be used to explore and plot mortality caused by COVID19.
+URL: https://github.com/courtiol/coronaR
+BugReports: https://github.com/courtiol/coronaR/issues
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0
+Imports: 
+    countrycode,
+    dplyr,
+    forcats,
+    ggplot2,
+    magrittr,
+    lubridate,
+    readxl,
+    rlang,
+    tibble,
+    utils,
+    tidyr,
+    wbstats
+
