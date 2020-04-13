@@ -28,12 +28,12 @@ merge_datasets <- function(data_ECDC, data_WB,
   full_data_raw2 %>%
     dplyr::mutate(days_since_first_10_cumul_deaths = .data$date_report - .data$date_first_10_cumul_deaths,
                   extra_mortality_daily_country = 100 * .data$deaths_daily/.data$total_death_day,
-                  extra_mortality_cumul_country = 100 * .data$deaths_cumul/(.data$total_death_day * (as.numeric(.data$days_since_first_10_cumul_deaths) + 1)),
+                  extra_mortality_cumul_country = 100 * (.data$deaths_cumul - 9)/(.data$total_death_day * (as.numeric(.data$days_since_first_10_cumul_deaths) + 1)), ## we remove 10 since we look at the period from 10 on, and we add one since if it is 0 day ago, there is still one day of data.
                   extra_mortality_cumul_country = dplyr::if_else(as.numeric(.data$days_since_first_10_cumul_deaths) < 0, NA_real_, .data$extra_mortality_cumul_country),
                   country_weight = .data$country_pop / .data$world_pop,
                   extra_mortality_daily_world = 100 * .data$deaths_daily/(.data$country_weight * .data$total_death_day_world),
                   extra_mortality_cumul_world = dplyr::if_else(.data$days_since_first_10_cumul_deaths >= 0,
-                                                               100 * .data$deaths_cumul/(.data$country_weight * .data$total_death_day_world * (as.numeric(.data$days_since_first_10_cumul_deaths) + 1)),
+                                                               100 * (.data$deaths_cumul - 9)/(.data$country_weight * .data$total_death_day_world * (as.numeric(.data$days_since_first_10_cumul_deaths) + 1)),
                                                                NA_real_)) -> full_data_raw3
 
   ## we retrieve the extra mortality for the correct baseline:
