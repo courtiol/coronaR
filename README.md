@@ -11,7 +11,9 @@ day. (If you want to know, a good rule of thumb is that over a given
 year, in a “rich” country, you can expect roughly 1% of its whole
 population to die.)
 
-## How to read the x-axis?
+## General tips for interpreting the plots
+
+### How to read the x-axis?
 
 Here I express the number of *reported* COVID19 deaths compared to 100
 “normal” deaths.
@@ -71,7 +73,7 @@ baseline mortality that occurs during the same period. Therefore, if the
 deaths caused by COVID19 pile up more slowly that the normal deaths,
 then the relative measure shown in the plot can go down.
 
-## Installation
+## Package installation
 
 You can install this package using **{remotes}** (or **{devtools}**):
 
@@ -79,7 +81,7 @@ You can install this package using **{remotes}** (or **{devtools}**):
 remotes::install_github("courtiol/coronaR")
 ```
 
-## Basic usage
+## Basic usage of the package
 
 ### Load the package {coronaR}
 
@@ -93,23 +95,23 @@ library(coronaR)
 today <- Sys.Date() ## note: you can change the date, to rebuild plots retrospectively
 data_COVID <- prepare_data_ECDC(path_save_data = "~/Downloads/COVID19",
                                 date_of_report = today)
-#> The source of the COVID data have been stored in~/Downloads/COVID19/COVID-19-geographic-disbtribution-worldwide-2020-04-12.xlsx!
+#> The source of the COVID data have been stored in~/Downloads/COVID19/COVID-19-geographic-disbtribution-worldwide-2020-04-13.xlsx!
 #> Warning in countrycode::countrycode(.data$iso2c, origin = "iso2c", destination = "continent"): Some values were not matched unambiguously: XK
 data_COVID
-#> # A tibble: 10,332 x 9
+#> # A tibble: 10,537 x 9
 #>    country iso2c continent date_report date_report_last cases deaths_daily
 #>    <chr>   <chr> <fct>     <date>      <date>           <dbl>        <dbl>
-#>  1 Afghan… AF    Asia      2019-12-31  2020-04-12           0            0
-#>  2 Afghan… AF    Asia      2020-01-01  2020-04-12           0            0
-#>  3 Afghan… AF    Asia      2020-01-02  2020-04-12           0            0
-#>  4 Afghan… AF    Asia      2020-01-03  2020-04-12           0            0
-#>  5 Afghan… AF    Asia      2020-01-04  2020-04-12           0            0
-#>  6 Afghan… AF    Asia      2020-01-05  2020-04-12           0            0
-#>  7 Afghan… AF    Asia      2020-01-06  2020-04-12           0            0
-#>  8 Afghan… AF    Asia      2020-01-07  2020-04-12           0            0
-#>  9 Afghan… AF    Asia      2020-01-08  2020-04-12           0            0
-#> 10 Afghan… AF    Asia      2020-01-09  2020-04-12           0            0
-#> # … with 10,322 more rows, and 2 more variables: deaths_cumul <dbl>,
+#>  1 Afghan… AF    Asia      2019-12-31  2020-04-13           0            0
+#>  2 Afghan… AF    Asia      2020-01-01  2020-04-13           0            0
+#>  3 Afghan… AF    Asia      2020-01-02  2020-04-13           0            0
+#>  4 Afghan… AF    Asia      2020-01-03  2020-04-13           0            0
+#>  5 Afghan… AF    Asia      2020-01-04  2020-04-13           0            0
+#>  6 Afghan… AF    Asia      2020-01-05  2020-04-13           0            0
+#>  7 Afghan… AF    Asia      2020-01-06  2020-04-13           0            0
+#>  8 Afghan… AF    Asia      2020-01-07  2020-04-13           0            0
+#>  9 Afghan… AF    Asia      2020-01-08  2020-04-13           0            0
+#> 10 Afghan… AF    Asia      2020-01-09  2020-04-13           0            0
+#> # … with 10,527 more rows, and 2 more variables: deaths_cumul <dbl>,
 #> #   date_first_10_cumul_deaths <date>
   
 ## NOTE: the following Warning is expected:
@@ -165,7 +167,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline country mortality")
+            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline country mortality")
 ```
 
 <img src="figures/README/plot1-1.png" width="100%" />
@@ -181,7 +183,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "world",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline worldwide mortality")
+            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline worldwide mortality")
 ```
 
 <img src="figures/README/plot2-1.png" width="100%" />
@@ -198,7 +200,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "cumul",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Cumulative deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline country mortality")
+            title = "Cumulative deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline country mortality")
 ```
 
 <img src="figures/README/plot3-1.png" width="100%" />
@@ -215,12 +217,12 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "cumul",
             baseline_minor = "world",
             select_minor = "last_day",
-            title = "Cumulative deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline worldwide mortality")
+            title = "Cumulative deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline worldwide mortality")
 ```
 
 <img src="figures/README/plot4-1.png" width="100%" />
 
-## More advanced usage
+## More advanced usage of the package
 
 ### Do your own plot
 
@@ -233,57 +235,36 @@ full_data <- merge_datasets(data_ECDC = data_COVID,
                             type = "daily",
                             baseline = "country",
                             select = "worst_day")
-full_data
-#> # A tibble: 8,235 x 24
-#>    country continent date_report date_report_last cases deaths_daily
-#>    <chr>   <fct>     <date>      <date>           <dbl>        <dbl>
-#>  1 Afghan… Asia      2020-04-12  2020-04-12          34            3
-#>  2 Afghan… Asia      2020-04-11  2020-04-12          37            0
-#>  3 Afghan… Asia      2020-04-10  2020-04-12          61            1
-#>  4 Afghan… Asia      2020-04-09  2020-04-12          56            3
-#>  5 Afghan… Asia      2020-04-08  2020-04-12          30            4
-#>  6 Afghan… Asia      2020-04-07  2020-04-12          38            0
-#>  7 Afghan… Asia      2020-04-06  2020-04-12          29            2
-#>  8 Afghan… Asia      2020-04-05  2020-04-12          35            1
-#>  9 Afghan… Asia      2020-04-04  2020-04-12           0            0
-#> 10 Afghan… Asia      2020-04-03  2020-04-12          43            0
-#> # … with 8,225 more rows, and 18 more variables: deaths_cumul <dbl>,
-#> #   date_first_10_cumul_deaths <date>, year_mortality <dbl>,
-#> #   total_death_year <dbl>, total_death_day <dbl>,
-#> #   total_death_year_world <dbl>, total_death_day_world <dbl>,
-#> #   country_pop <dbl>, world_pop <dbl>,
-#> #   days_since_first_10_cumul_deaths <drtn>,
-#> #   extra_mortality_daily_country <dbl>, extra_mortality_cumul_country <dbl>,
-#> #   country_weight <dbl>, extra_mortality_daily_world <dbl>,
-#> #   extra_mortality_cumul_world <dbl>, extra_mortality <dbl>, date <date>,
-#> #   days_since_date <drtn>
+```
+
+``` r
 str(full_data)
-#> tibble [8,235 × 24] (S3: tbl_df/tbl/data.frame)
-#>  $ country                         : chr [1:8235] "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
+#> tibble [8,377 × 24] (S3: tbl_df/tbl/data.frame)
+#>  $ country                         : chr [1:8377] "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
 #>  $ continent                       : Factor w/ 5 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
-#>  $ date_report                     : Date[1:8235], format: "2020-04-12" "2020-04-11" ...
-#>  $ date_report_last                : Date[1:8235], format: "2020-04-12" "2020-04-12" ...
-#>  $ cases                           : num [1:8235] 34 37 61 56 30 38 29 35 0 43 ...
-#>  $ deaths_daily                    : num [1:8235] 3 0 1 3 4 0 2 1 0 0 ...
-#>  $ deaths_cumul                    : num [1:8235] 18 15 15 14 11 7 7 5 4 4 ...
-#>  $ date_first_10_cumul_deaths      : Date[1:8235], format: "2020-04-08" "2020-04-08" ...
-#>  $ year_mortality                  : num [1:8235] 2018 2018 2018 2018 2018 ...
-#>  $ total_death_year                : num [1:8235] 238758 238758 238758 238758 238758 ...
-#>  $ total_death_day                 : num [1:8235] 654 654 654 654 654 ...
-#>  $ total_death_year_world          : num [1:8235] 56650926 56650926 56650926 56650926 56650926 ...
-#>  $ total_death_day_world           : num [1:8235] 155208 155208 155208 155208 155208 ...
-#>  $ country_pop                     : num [1:8235] 37172386 37172386 37172386 37172386 37172386 ...
-#>  $ world_pop                       : num [1:8235] 7.51e+09 7.51e+09 7.51e+09 7.51e+09 7.51e+09 ...
-#>  $ days_since_first_10_cumul_deaths: 'difftime' num [1:8235] 4 3 2 1 ...
+#>  $ date_report                     : Date[1:8377], format: "2020-04-13" "2020-04-12" ...
+#>  $ date_report_last                : Date[1:8377], format: "2020-04-13" "2020-04-13" ...
+#>  $ cases                           : num [1:8377] 52 34 37 61 56 30 38 29 35 0 ...
+#>  $ deaths_daily                    : num [1:8377] 0 3 0 1 3 4 0 2 1 0 ...
+#>  $ deaths_cumul                    : num [1:8377] 18 18 15 15 14 11 7 7 5 4 ...
+#>  $ date_first_10_cumul_deaths      : Date[1:8377], format: "2020-04-08" "2020-04-08" ...
+#>  $ year_mortality                  : num [1:8377] 2018 2018 2018 2018 2018 ...
+#>  $ total_death_year                : num [1:8377] 238758 238758 238758 238758 238758 ...
+#>  $ total_death_day                 : num [1:8377] 654 654 654 654 654 ...
+#>  $ total_death_year_world          : num [1:8377] 56650926 56650926 56650926 56650926 56650926 ...
+#>  $ total_death_day_world           : num [1:8377] 155208 155208 155208 155208 155208 ...
+#>  $ country_pop                     : num [1:8377] 37172386 37172386 37172386 37172386 37172386 ...
+#>  $ world_pop                       : num [1:8377] 7.51e+09 7.51e+09 7.51e+09 7.51e+09 7.51e+09 ...
+#>  $ days_since_first_10_cumul_deaths: 'difftime' num [1:8377] 5 4 3 2 ...
 #>   ..- attr(*, "units")= chr "days"
-#>  $ extra_mortality_daily_country   : num [1:8235] 0.459 0 0.153 0.459 0.611 ...
-#>  $ extra_mortality_cumul_country   : num [1:8235] 0.55 0.573 0.764 1.07 1.682 ...
-#>  $ country_weight                  : num [1:8235] 0.00495 0.00495 0.00495 0.00495 0.00495 ...
-#>  $ extra_mortality_daily_world     : num [1:8235] 0.391 0 0.13 0.391 0.521 ...
-#>  $ extra_mortality_cumul_world     : num [1:8235] 0.469 0.488 0.651 0.911 1.432 ...
-#>  $ extra_mortality                 : num [1:8235] 0.611 0.611 0.611 0.611 0.611 ...
-#>  $ date                            : Date[1:8235], format: "2020-04-08" "2020-04-08" ...
-#>  $ days_since_date                 : 'difftime' num [1:8235] 4 4 4 4 ...
+#>  $ extra_mortality_daily_country   : num [1:8377] 0 0.459 0 0.153 0.459 ...
+#>  $ extra_mortality_cumul_country   : num [1:8377] 0.459 0.55 0.573 0.764 1.07 ...
+#>  $ country_weight                  : num [1:8377] 0.00495 0.00495 0.00495 0.00495 0.00495 ...
+#>  $ extra_mortality_daily_world     : num [1:8377] 0 0.391 0 0.13 0.391 ...
+#>  $ extra_mortality_cumul_world     : num [1:8377] 0.391 0.469 0.488 0.651 0.911 ...
+#>  $ extra_mortality                 : num [1:8377] 0.611 0.611 0.611 0.611 0.611 ...
+#>  $ date                            : Date[1:8377], format: "2020-04-08" "2020-04-08" ...
+#>  $ days_since_date                 : 'difftime' num [1:8377] 5 5 5 5 ...
 #>   ..- attr(*, "units")= chr "days"
 ```
 
@@ -298,7 +279,7 @@ plot_data <- plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline mortality")
+            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline mortality")
 ```
 
 ``` r
@@ -320,7 +301,7 @@ plot_plot <- plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline mortality",
+            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline mortality",
             return_plot = TRUE)
 ```
 
@@ -363,7 +344,7 @@ devtools::session_info()
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       Europe/Berlin               
-#>  date     2020-04-12                  
+#>  date     2020-04-13                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version     date       lib source                            

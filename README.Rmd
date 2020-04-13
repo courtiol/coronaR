@@ -23,7 +23,9 @@ knitr::opts_chunk$set(
 The motivation for such an R package and the plots it produces is that most people don't know if X deaths caused by something is a lot or not. Indeed, unless you are a demographer, you probably have no idea how many people die in the world or even in your city, over a year, or over a day. (If you want to know, a good rule of thumb is that over a given year, in a "rich" country, you can expect roughly 1% of its whole population to die.)
 
 
-## How to read the x-axis?
+## General tips for interpreting the plots
+
+### How to read the x-axis?
 
 Here I express the number of _reported_ COVID19 deaths compared to 100 "normal" deaths.
 
@@ -57,7 +59,7 @@ To count normal deaths and produce a baseline, the package allows you to either 
 
 It is because the cumulative deaths are expressed relatively to the baseline mortality that occurs during the same period. Therefore, if the deaths caused by COVID19 pile up more slowly that the normal deaths, then the relative measure shown in the plot can go down.
 
-## Installation
+## Package installation
 
 You can install this package using __{remotes}__ (or __{devtools}__):
 
@@ -65,7 +67,7 @@ You can install this package using __{remotes}__ (or __{devtools}__):
 remotes::install_github("courtiol/coronaR")
 ```
 
-## Basic usage
+## Basic usage of the package
 
 ### Load the package {coronaR}
 
@@ -115,7 +117,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline country mortality")
+            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline country mortality")
 ```
 
 ```{r, save plot1, echo = FALSE}
@@ -133,12 +135,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "world",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline worldwide mortality")
-```
-
-```{r, save plot2, echo = FALSE}
-ggplot2::ggsave(filename = paste0("./figures/extra_mortality_daily_world",
-                                  today, ".png"), width = 9, height = 6, units = "in")
+            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline worldwide mortality")
 ```
 
 To look at cumulative deaths, using the baseline mortality from each country:
@@ -151,7 +148,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "cumul",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Cumulative deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline country mortality")
+            title = "Cumulative deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline country mortality")
 ```
 
 ```{r, save plot3, echo = FALSE}
@@ -169,15 +166,10 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "cumul",
             baseline_minor = "world",
             select_minor = "last_day",
-            title = "Cumulative deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline worldwide mortality")
+            title = "Cumulative deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline worldwide mortality")
 ```
 
-```{r, save plot4, echo = FALSE}
-ggplot2::ggsave(filename = paste0("./figures/extra_mortality_cumul_world",
-                                  today, ".png"), width = 9, height = 6, units = "in")
-```
-
-## More advanced usage
+## More advanced usage of the package
 
 ### Do your own plot
 
@@ -190,7 +182,9 @@ full_data <- merge_datasets(data_ECDC = data_COVID,
                             type = "daily",
                             baseline = "country",
                             select = "worst_day")
-full_data
+```
+
+```{r, merge output}
 str(full_data)
 ```
 
@@ -205,7 +199,7 @@ plot_data <- plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline mortality")
+            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline mortality")
 ```
 
 
@@ -227,7 +221,7 @@ plot_plot <- plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dull & bright colour)\nrelative to baseline mortality",
+            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline mortality",
             return_plot = TRUE)
 ```
 
