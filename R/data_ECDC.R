@@ -2,11 +2,12 @@
 #'
 #' @param date_of_report the date of the report to download and process (of format Date)
 #' @param path_save_data the path where to save the data file (without trailing "/")
+#' @param .skip_download TRUE if you do not not want to download and use directly a file of the right name stored in path_save_data.
 #'
 #' @return a tidy ECDC dataset
 #' @export
 #'
-prepare_data_ECDC <- function(date_of_report = Sys.Date(), path_save_data = NULL) {
+prepare_data_ECDC <- function(date_of_report = Sys.Date(), path_save_data = NULL, .skip_download = FALSE) {
 
   if (is.null(path_save_data)) {
     stop("you must set the path_save_data argument")
@@ -24,13 +25,15 @@ prepare_data_ECDC <- function(date_of_report = Sys.Date(), path_save_data = NULL
   data_COVID_full_path_local <- paste0(data_COVID_basefile, ".xlsx")
   data_COVID_full_path_online <- paste0(weblink_COVID_baselfile, ".xlsx")
 
-  ## download file:
-  downloadOK <- utils::download.file(data_COVID_full_path_online,
-                                     destfile = data_COVID_full_path_local,
-                                     mode = "wb")
-  if (downloadOK != 0) stop("Download failed, perhaps the report is not yet out...")
+  if (!.skip_download) {
+    ## download file:
+    downloadOK <- utils::download.file(data_COVID_full_path_online,
+                                       destfile = data_COVID_full_path_local,
+                                       mode = "wb")
+    if (downloadOK != 0) stop("Download failed, perhaps the report is not yet out...")
 
-  message(paste0("The source of the COVID data have been stored in", data_COVID_full_path_local, "!"))
+    message(paste0("The source of the COVID data have been stored in", data_COVID_full_path_local, "!"))
+  }
 
   ## read file:
   data_COVID_raw <- readxl::read_xlsx(paste0(data_COVID_basefile, ".xlsx"))
