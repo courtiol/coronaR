@@ -121,8 +121,8 @@ compare_last_2_rankings <- function(data_ranked) {
                   extra_mortality_before_last_report = 4,
                   extra_mortality_last_report = 5) %>%
     dplyr::mutate(diff_ranks = -1*(.data$rank_last_report - .data$rank_before_last_report),
-                  diff_ranks_pretty = dplyr::case_when(diff_ranks > 0 ~ paste0(diff_ranks, "↑ "),
-                                                       diff_ranks < 0 ~ paste0(-diff_ranks, "↓ "),
+                  diff_ranks_pretty = dplyr::case_when(diff_ranks > 0 ~ paste0(diff_ranks, sprintf("\u2191"), " "),
+                                                       diff_ranks < 0 ~ paste0(-diff_ranks, sprintf("\u2193"), " "),
                                                        diff_ranks == "0" ~ "= ",
                                                        TRUE ~ "new"), .after = .data$rank_last_report) %>%
     dplyr::arrange(.data$rank_last_report) -> data_compared
