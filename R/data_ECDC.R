@@ -25,7 +25,9 @@ prepare_data_ECDC <- function(date_of_report = Sys.Date(), path_save_data = NULL
   data_COVID_full_path_online <- paste0(weblink_COVID_baselfile, ".xlsx")
 
   ## download file:
-  downloadOK <- utils::download.file(data_COVID_full_path_online, destfile = data_COVID_full_path_local)
+  downloadOK <- utils::download.file(data_COVID_full_path_online,
+                                     destfile = data_COVID_full_path_local,
+                                     mode = "wb")
   if (downloadOK != 0) stop("Download failed, perhaps the report is not yet out...")
 
   message(paste0("The source of the COVID data have been stored in", data_COVID_full_path_local, "!"))
