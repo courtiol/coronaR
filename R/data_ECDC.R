@@ -73,7 +73,7 @@ prepare_data_ECDC <- function(date_of_report = Sys.Date(), path_save_data = NULL
     dplyr::mutate(deaths_cumul = cumsum(.data$deaths),
                   date_first_10_cumul_deaths = .data$date_report[which(.data$deaths_cumul >= 10)[1]]) %>%
     #dplyr::group_by(.data$country, .data$date_report) %>%  ## we remove some rare duplicates -> no longer needed
-    #dplyr::slice_max(.data$cases) %>% ## we remove some rare duplicates -> no longer needed
+    #dplyr::slice(which.max(.data$cases)[1]) %>% ## we remove some rare duplicates -> no longer needed
     dplyr::ungroup() %>%
     dplyr::rename(deaths_daily = .data$deaths) -> data_COVID4
 

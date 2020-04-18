@@ -149,9 +149,11 @@ plot_deaths <- function(data_ECDC,
     data_for_plot_major -> data_for_plot_raw
   }
 
+
   ## select worst 30
   data_for_plot_raw %>%
-    dplyr::slice_max(.data$extra_mortality, n = 30, with_ties = FALSE) -> data_plot
+    dplyr::arrange(dplyr::desc(.data$extra_mortality)) %>%
+    dplyr::slice(1:30) -> data_plot
 
   ## define xmax
   xmax <- 10 + round(0.1*safe_max(data_for_plot_raw$extra_mortality)) * 10
