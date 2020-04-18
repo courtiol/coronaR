@@ -173,3 +173,4 @@ safe_cummax <- function(x) {
   }
   res
 }
+
