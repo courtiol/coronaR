@@ -55,7 +55,9 @@ prepare_data_ECDC <- function(date_of_report = Sys.Date(), path_save_data = NULL
                                              countrycode::countrycode(.data$iso2c, origin = "iso2c", destination = "continent")),
                   continent = factor(.data$continent, levels = c("Africa", "Americas", "Asia", "Europe", "Oceania"))) %>%
     dplyr::select(-.data$geoId, -.data$countryterritoryCode) %>%
-    dplyr::rename_all(tolower) -> data_COVID_raw2
+    dplyr::rename_all(tolower) %>%
+    dplyr::rename(daterep = 1) -> data_COVID_raw2 ## sometimes first column contains something else
+
 
   ## we improve info about dates:
   data_COVID_raw2 %>%
