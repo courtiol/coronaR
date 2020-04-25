@@ -101,8 +101,8 @@ For daily plots, you may want to remove manually lump report of deaths from nurs
 We also remove some errors that show up from time to time (I use www.worldometers.com to figure this out):
 
 ```{r, prep COVID2}
-  data_COVID[data_COVID$country == "Iran" & data_COVID$date_report == "2020-04-22", "deaths_daily"] <- 88
-  data_COVID[data_COVID$country == "Iran" & data_COVID$date_report == "2020-04-22", "deaths_cumul"] <- 5297
+data_COVID[data_COVID$date_report == c("2020-04-25") & data_COVID$country == "Chile", "deaths_daily"] <- 6
+data_COVID[data_COVID$date_report == c("2020-04-25") & data_COVID$country == "Chile", "deaths_cumul"] <- 174
 ```
   
 ### Create the data with the baseline mortality information
