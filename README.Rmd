@@ -124,7 +124,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline country mortality")
+            title = "Deaths by COVID19 on the worst and last day (light & dark colour)\nrelative to baseline country mortality")
 ```
 
 ```{r, save plot1, echo = FALSE}
@@ -142,7 +142,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "world",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline worldwide mortality")
+            title = "Deaths by COVID19 on the worst and last day (light & dark colour)\nrelative to baseline worldwide mortality")
 ```
 
 To look at cumulative deaths, using the baseline mortality from each country:
@@ -155,7 +155,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "cumul",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Cumulative deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline country mortality")
+            title = "Cumulative deaths by COVID19 on the worst and last day (light & dark colour)\nrelative to baseline country mortality")
 ```
 
 ```{r, save plot3, echo = FALSE}
@@ -173,7 +173,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "cumul",
             baseline_minor = "world",
             select_minor = "last_day",
-            title = "Cumulative deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline worldwide mortality")
+            title = "Cumulative deaths by COVID19 on the worst and last day (light & dark colour)\nrelative to baseline worldwide mortality")
 ```
 
 ## More advanced usage of the package
@@ -206,7 +206,7 @@ plot_data <- plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline mortality")
+            title = "Deaths by COVID19 on the worst and last day (light & dark colour)\nrelative to baseline mortality")
 ```
 
 

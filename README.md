@@ -176,7 +176,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline country mortality")
+            title = "Deaths by COVID19 on the worst and last day (light & dark colour)\nrelative to baseline country mortality")
 ```
 
 <img src="figures/README/plot1-1.png" width="100%" />
@@ -192,7 +192,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "world",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline worldwide mortality")
+            title = "Deaths by COVID19 on the worst and last day (light & dark colour)\nrelative to baseline worldwide mortality")
 ```
 
 <img src="figures/README/plot2-1.png" width="100%" />
@@ -209,7 +209,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "cumul",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Cumulative deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline country mortality")
+            title = "Cumulative deaths by COVID19 on the worst and last day (light & dark colour)\nrelative to baseline country mortality")
 ```
 
 <img src="figures/README/plot3-1.png" width="100%" />
@@ -226,7 +226,7 @@ plot_deaths(data_ECDC = data_COVID,
             type_minor = "cumul",
             baseline_minor = "world",
             select_minor = "last_day",
-            title = "Cumulative deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline worldwide mortality")
+            title = "Cumulative deaths by COVID19 on the worst and last day (light & dark colour)\nrelative to baseline worldwide mortality")
 ```
 
 <img src="figures/README/plot4-1.png" width="100%" />
@@ -288,7 +288,7 @@ plot_data <- plot_deaths(data_ECDC = data_COVID,
             type_minor = "daily",
             baseline_minor = "country",
             select_minor = "last_day",
-            title = "Deaths by COVID19 on the worst and last day (dark & light colour)\nrelative to baseline mortality")
+            title = "Deaths by COVID19 on the worst and last day (light & dark colour)\nrelative to baseline mortality")
 ```
 
 ``` r
