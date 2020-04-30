@@ -97,6 +97,8 @@ For daily plots, you may want to remove manually lump report of deaths from nurs
   data_COVID[data_COVID$country == "Belgium" & data_COVID$date_report == "2020-04-08", "deaths_daily"] <- 162
   data_COVID[data_COVID$country == "Belgium" & data_COVID$date_report == "2020-04-11", "deaths_daily"] <- 325
 data_COVID[data_COVID$date_report == c("2020-04-26") & data_COVID$country == "Ireland", "deaths_daily"] <- 42
+data_COVID[data_COVID$date_report == c("2020-04-30") & data_COVID$country == "Turkey", "deaths_daily"] <- 89
+data_COVID[data_COVID$date_report == c("2020-04-30") & data_COVID$country == "United_Kingdom", "deaths_daily"] <- 795
 ```
 
 We also remove some errors that show up from time to time (I use www.worldometers.com to figure this out and/or official national reports):
