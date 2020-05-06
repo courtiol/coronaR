@@ -60,16 +60,32 @@ prepare_data_ECDC <- function(date_of_report = Sys.Date(), path_save_data = NULL
 
 
   ## we improve info about dates:
+
+  ###Template to fix missing dates
   data_COVID_raw2 %>%
-    dplyr::mutate(date_report = as.Date(.data$daterep),
-                  days_since_report = !!date_of_report - as.Date(.data$date_report)) %>%
+    dplyr::mutate(date_report = as.Date(.data$daterep)) %>%
+    dplyr::group_by(country) %>%
+    dplyr::summarise(date_report = list(!!date_of_report:min(date_report)),
+                     continent = unique(continent),
+                     iso2c = unique(iso2c),
+                     continentexp = unique(continentexp),
+                     popdata2018 = unique(popdata2018)) %>%
+    tidyr::unnest(cols = date_report) %>%
+    dplyr::mutate(date_report = as.Date(date_report, origin = "1970-01-01")) -> full_country_dates
+
+  data_COVID_raw2 %>%
+    dplyr::mutate(date_report = as.Date(.data$daterep)) %>%
+    dplyr::right_join(full_country_dates, by = c("country", "popdata2018", "continentexp", "iso2c", "continent", "date_report")) %>%
+    dplyr::mutate(days_since_report = !!date_of_report - as.Date(.data$date_report)) %>%
     dplyr::group_by(.data$country) %>%
-    dplyr::mutate(date_report_last = max(.data$date_report)) %>%
+    dplyr::mutate(date_report_last = max(.data$date_report, na.rm =  TRUE)) %>%
     dplyr::ungroup() %>%
     dplyr::select(-.data$daterep, -.data$day, -.data$month, -.data$year) -> data_COVID_raw3
 
   ## we improve info about deaths:
   data_COVID_raw3 %>%
+    dplyr::mutate(deaths = ifelse(is.na(deaths), 0, deaths),
+                  cases = ifelse(is.na(cases), 0, cases)) %>%
     dplyr::group_by(.data$country) %>%
     dplyr::arrange(.data$date_report, .by_group = TRUE) %>%
     dplyr::mutate(deaths_cumul = cumsum(.data$deaths),
@@ -77,6 +93,7 @@ prepare_data_ECDC <- function(date_of_report = Sys.Date(), path_save_data = NULL
     #dplyr::group_by(.data$country, .data$date_report) %>%  ## we remove some rare duplicates -> no longer needed
     #dplyr::slice(which.max(.data$cases)[1]) %>% ## we remove some rare duplicates -> no longer needed
     dplyr::ungroup() %>%
+    dplyr::arrange(country, dplyr::desc(date_report)) %>%
     dplyr::rename(deaths_daily = .data$deaths) -> data_COVID4
 
   ## we select and reorder the columns for clarity:
