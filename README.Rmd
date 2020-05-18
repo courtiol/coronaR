@@ -102,10 +102,11 @@ data_COVID[data_COVID$date_report == c("2020-04-30") & data_COVID$country == "Tu
 data_COVID[data_COVID$date_report == c("2020-04-30") & data_COVID$country == "United_Kingdom", "deaths_daily"] <- 795
 ```
 
-We also remove some errors that show up from time to time (I use www.worldometers.com to figure this out and/or official national reports):
+We also solve some other issues that show up from time to time (I use www.worldometers.com to figure this out and/or official national reports):
 
 ```{r, prep COVID2}
-# nothing for now
+## Date from Spain have one day lag:
+data_COVID[data_COVID$country == "Spain" & data_COVID$date_report == Sys.Date(), "deaths_daily"] <- data_COVID[data_COVID$country == "Spain" & data_COVID$date_report == Sys.Date() - 1,  "deaths_daily"]
 ```
   
 ### Create the data with the baseline mortality information
