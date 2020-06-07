@@ -77,7 +77,7 @@ library(coronaR)
 
 ### Create the data with the COVID mortality information
 ```{r, prep ECDC}
-today <- Sys.Date() ## note: you can change the date, to rebuild plots retrospectively
+today <- Sys.Date() - 1 ## note: you can change the date, to rebuild plots retrospectively
 data_COVID <- prepare_data_ECDC(path_save_data = "~/Downloads/COVID19",
                                 date_of_report = today)
 data_COVID
