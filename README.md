@@ -29,9 +29,9 @@ percentage, the death toll would just slowly converge towards 100%.
 
 If you still want to express such number as a percentage, just do:
 
-If you still want to express such number as a percentage, just do `100 *
-X/(100 + X)`. For example, with 50 COVID death per 100 normal ones, the
-percentage of COVID death is thus 100 \* 50/150 = 33.333%.
+If you still want to express such number as a percentage, just do
+`100 * X/(100 + X)`. For example, with 50 COVID death per 100 normal
+ones, the percentage of COVID death is thus 100 \* 50/150 = 33.333%.
 
 If instead you want to instead express values along the x-axis as the
 odd of dying from COVID, just divide the value X you read on the axis by
@@ -95,23 +95,27 @@ library(coronaR)
 today <- Sys.Date() ## note: you can change the date, to rebuild plots retrospectively
 data_COVID <- prepare_data_ECDC(path_save_data = "~/Downloads/COVID19",
                                 date_of_report = today)
-#> The source of the COVID data have been stored in~/Downloads/COVID19/COVID-19-geographic-disbtribution-worldwide-2020-06-12.xlsx!
+#> The source of the COVID data have been stored in~/Downloads/COVID19/COVID-19-geographic-disbtribution-worldwide-2020-11-02.xlsx!
+#> Warning: Problem with `mutate()` input `continent`.
+#> ℹ Some values were not matched unambiguously: XK
+#> 
+#> ℹ Input `continent` is `dplyr::if_else(...)`.
 #> Warning in countrycode::countrycode(.data$iso2c, origin = "iso2c", destination = "continent"): Some values were not matched unambiguously: XK
 data_COVID
-#> # A tibble: 23,590 x 9
+#> # A tibble: 53,676 x 9
 #>    country iso2c continent date_report date_report_last cases deaths_daily
 #>    <chr>   <chr> <fct>     <date>      <date>           <dbl>        <dbl>
-#>  1 Afghan… AF    Asia      2020-06-12  2020-06-12         747           21
-#>  2 Afghan… AF    Asia      2020-06-11  2020-06-12         684           21
-#>  3 Afghan… AF    Asia      2020-06-10  2020-06-12         542           15
-#>  4 Afghan… AF    Asia      2020-06-09  2020-06-12         575           12
-#>  5 Afghan… AF    Asia      2020-06-08  2020-06-12         791           30
-#>  6 Afghan… AF    Asia      2020-06-07  2020-06-12         582           18
-#>  7 Afghan… AF    Asia      2020-06-06  2020-06-12         915            9
-#>  8 Afghan… AF    Asia      2020-06-05  2020-06-12         787            6
-#>  9 Afghan… AF    Asia      2020-06-04  2020-06-12         758           24
-#> 10 Afghan… AF    Asia      2020-06-03  2020-06-12         759            5
-#> # … with 23,580 more rows, and 2 more variables: deaths_cumul <dbl>,
+#>  1 Afghan… AF    Asia      2020-11-02  2020-11-02         132            5
+#>  2 Afghan… AF    Asia      2020-11-01  2020-11-02          76            0
+#>  3 Afghan… AF    Asia      2020-10-31  2020-11-02         157            4
+#>  4 Afghan… AF    Asia      2020-10-30  2020-11-02         123            3
+#>  5 Afghan… AF    Asia      2020-10-29  2020-11-02           0            0
+#>  6 Afghan… AF    Asia      2020-10-28  2020-11-02         113            7
+#>  7 Afghan… AF    Asia      2020-10-27  2020-11-02         199            8
+#>  8 Afghan… AF    Asia      2020-10-26  2020-11-02          65            3
+#>  9 Afghan… AF    Asia      2020-10-25  2020-11-02          81            4
+#> 10 Afghan… AF    Asia      2020-10-24  2020-11-02          61            2
+#> # … with 53,666 more rows, and 2 more variables: deaths_cumul <dbl>,
 #> #   date_first_10_cumul_deaths <date>
   
 ## NOTE: the following Warning is expected:
@@ -126,13 +130,17 @@ For daily plots, you may want to remove manually lump report of deaths
 from nursing homes:
 
 ``` r
-  data_COVID[data_COVID$country == "Italy" & data_COVID$date_report == "2020-05-14", "deaths_daily"] <- 195
-  data_COVID[data_COVID$country == "France" & data_COVID$date_report == "2020-04-04", "deaths_daily"] <- 1120
-  data_COVID[data_COVID$country == "Belgium" & data_COVID$date_report == "2020-04-08", "deaths_daily"] <- 162
-  data_COVID[data_COVID$country == "Belgium" & data_COVID$date_report == "2020-04-11", "deaths_daily"] <- 325
-data_COVID[data_COVID$date_report == c("2020-04-26") & data_COVID$country == "Ireland", "deaths_daily"] <- 42
-data_COVID[data_COVID$date_report == c("2020-04-30") & data_COVID$country == "Turkey", "deaths_daily"] <- 89
-data_COVID[data_COVID$date_report == c("2020-04-30") & data_COVID$country == "United_Kingdom", "deaths_daily"] <- 795
+data_COVID[data_COVID$country == "France" & data_COVID$date_report == "2020-04-04", "deaths_daily"] <- NA
+data_COVID[data_COVID$country == "Belgium" & data_COVID$date_report == "2020-04-08", "deaths_daily"] <- NA
+data_COVID[data_COVID$date_report == c("2020-04-26") & data_COVID$country == "Ireland", "deaths_daily"] <- NA
+data_COVID[data_COVID$date_report == c("2020-09-07") & data_COVID$country == "Ecuador", "deaths_daily"] <- NA
+data_COVID[data_COVID$date_report == c("2020-07-24") & data_COVID$country == "Peru", "deaths_daily"] <- NA
+data_COVID[data_COVID$date_report == c("2020-08-14") & data_COVID$country == "Peru", "deaths_daily"] <- NA
+data_COVID[data_COVID$date_report == c("2020-07-18") & data_COVID$country == "Kyrgyzstan", "deaths_daily"] <- NA
+data_COVID[data_COVID$date_report == c("2020-09-07") & data_COVID$country == "Bolivia", "deaths_daily"] <- NA
+data_COVID[data_COVID$date_report == c("2020-10-02") & data_COVID$country == "Argentina", "deaths_daily"] <- NA
+data_COVID[data_COVID$date_report == c("2020-07-18") & data_COVID$country == "Chile", "deaths_daily"] <- NA
+data_COVID[data_COVID$date_report == c("2020-06-08") & data_COVID$country == "Chile", "deaths_daily"] <- NA
 ```
 
 We also solve some other issues that show up from time to time (I use
@@ -141,7 +149,9 @@ reports):
 
 ``` r
 ## Date from Spain have one day lag:
-data_COVID[data_COVID$country == "Spain" & data_COVID$date_report == Sys.Date(), "deaths_daily"] <- data_COVID[data_COVID$country == "Spain" & data_COVID$date_report == Sys.Date() - 1,  "deaths_daily"]
+if (data_COVID[data_COVID$country == "Spain" & data_COVID$date_report == Sys.Date(), "deaths_daily"] == 0) {
+  data_COVID[data_COVID$country == "Spain" & data_COVID$date_report == Sys.Date(), "deaths_daily"] <- data_COVID[data_COVID$country == "Spain" & data_COVID$date_report == Sys.Date() - 1,  "deaths_daily"]
+}
 ```
 
 ### Create the data with the baseline mortality information
@@ -149,43 +159,6 @@ data_COVID[data_COVID$country == "Spain" & data_COVID$date_report == Sys.Date(),
 ``` r
 data_baseline_mortality <- prepare_data_WB() ## the data do sometimes change from day to day!
 #> Downloading fresh data from World Bank, be patient...
-#> Warning: `wbcache()` is deprecated as of wbstats 1.0.0.
-#> Please use `wb_cache()` instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_warnings()` to see where this warning was generated.
-#> Warning: `wbcountries()` is deprecated as of wbstats 1.0.0.
-#> Please use `wb_countries()` instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_warnings()` to see where this warning was generated.
-#> Warning: `wbindicators()` is deprecated as of wbstats 1.0.0.
-#> Please use `wb_indicators()` instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_warnings()` to see where this warning was generated.
-#> Warning: `wbsources()` is deprecated as of wbstats 1.0.0.
-#> Please use `wb_sources()` instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_warnings()` to see where this warning was generated.
-#> Warning: `wbdatacatalog()` is deprecated as of wbstats 1.0.0.
-#> This function uses an out of date version of the Data Catalog API. wbstats does not currently have support for the latest API version.
-#>  Please see https://datacatalog.worldbank.org/ for up to date information.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_warnings()` to see where this warning was generated.
-#> Warning: `wbtopics()` is deprecated as of wbstats 1.0.0.
-#> Please use `wb_topics()` instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_warnings()` to see where this warning was generated.
-#> Warning: `wbincome()` is deprecated as of wbstats 1.0.0.
-#> Please use `wb_income_levels()` instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_warnings()` to see where this warning was generated.
-#> Warning: `wblending()` is deprecated as of wbstats 1.0.0.
-#> Please use `wb_lending_types()` instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_warnings()` to see where this warning was generated.
-#> Warning: `wb()` is deprecated as of wbstats 1.0.0.
-#> Please use `wb_data()` instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_warnings()` to see where this warning was generated.
 data_baseline_mortality
 #> # A tibble: 147 x 9
 #>    country iso2c year_mortality total_death_year total_death_day
@@ -289,32 +262,32 @@ full_data <- merge_datasets(data_ECDC = data_COVID,
 
 ``` r
 str(full_data)
-#> tibble [17,315 × 24] (S3: tbl_df/tbl/data.frame)
-#>  $ country                         : chr [1:17315] "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
+#> tibble [37,907 × 24] (S3: tbl_df/tbl/data.frame)
+#>  $ country                         : chr [1:37907] "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
 #>  $ continent                       : Factor w/ 5 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
-#>  $ date_report                     : Date[1:17315], format: "2020-06-12" "2020-06-11" ...
-#>  $ date_report_last                : Date[1:17315], format: "2020-06-12" "2020-06-12" ...
-#>  $ cases                           : num [1:17315] 747 684 542 575 791 582 915 787 758 759 ...
-#>  $ deaths_daily                    : num [1:17315] 21 21 15 12 30 18 9 6 24 5 ...
-#>  $ deaths_cumul                    : num [1:17315] 426 405 384 369 357 327 309 300 294 270 ...
-#>  $ date_first_10_cumul_deaths      : Date[1:17315], format: "2020-04-08" "2020-04-08" ...
-#>  $ year_mortality                  : num [1:17315] 2018 2018 2018 2018 2018 ...
-#>  $ total_death_year                : num [1:17315] 238758 238758 238758 238758 238758 ...
-#>  $ total_death_day                 : num [1:17315] 654 654 654 654 654 ...
-#>  $ total_death_year_world          : num [1:17315] 57162986 57162986 57162986 57162986 57162986 ...
-#>  $ total_death_day_world           : num [1:17315] 156611 156611 156611 156611 156611 ...
-#>  $ country_pop                     : num [1:17315] 37172386 37172386 37172386 37172386 37172386 ...
-#>  $ world_pop                       : num [1:17315] 7.59e+09 7.59e+09 7.59e+09 7.59e+09 7.59e+09 ...
-#>  $ days_since_first_10_cumul_deaths: 'difftime' num [1:17315] 65 64 63 62 ...
+#>  $ date_report                     : Date[1:37907], format: "2020-11-02" "2020-11-01" ...
+#>  $ date_report_last                : Date[1:37907], format: "2020-11-02" "2020-11-02" ...
+#>  $ cases                           : num [1:37907] 132 76 157 123 0 113 199 65 81 61 ...
+#>  $ deaths_daily                    : num [1:37907] 5 0 4 3 0 7 8 3 4 2 ...
+#>  $ deaths_cumul                    : num [1:37907] 1541 1536 1536 1532 1529 ...
+#>  $ date_first_10_cumul_deaths      : Date[1:37907], format: "2020-04-08" "2020-04-08" ...
+#>  $ year_mortality                  : num [1:37907] 2018 2018 2018 2018 2018 ...
+#>  $ total_death_year                : num [1:37907] 238758 238758 238758 238758 238758 ...
+#>  $ total_death_day                 : num [1:37907] 654 654 654 654 654 ...
+#>  $ total_death_year_world          : num [1:37907] 57158343 57158343 57158343 57158343 57158343 ...
+#>  $ total_death_day_world           : num [1:37907] 156598 156598 156598 156598 156598 ...
+#>  $ country_pop                     : num [1:37907] 37172386 37172386 37172386 37172386 37172386 ...
+#>  $ world_pop                       : num [1:37907] 7.59e+09 7.59e+09 7.59e+09 7.59e+09 7.59e+09 ...
+#>  $ days_since_first_10_cumul_deaths: 'difftime' num [1:37907] 208 207 206 205 ...
 #>   ..- attr(*, "units")= chr "days"
-#>  $ extra_mortality_daily_country   : num [1:17315] 3.21 3.21 2.29 1.83 4.59 ...
-#>  $ extra_mortality_cumul_country   : num [1:17315] 0.966 0.931 0.896 0.874 0.858 ...
-#>  $ country_weight                  : num [1:17315] 0.0049 0.0049 0.0049 0.0049 0.0049 ...
-#>  $ extra_mortality_daily_world     : num [1:17315] 2.74 2.74 1.96 1.57 3.91 ...
-#>  $ extra_mortality_cumul_world     : num [1:17315] 0.824 0.795 0.764 0.745 0.732 ...
-#>  $ extra_mortality                 : num [1:17315] 4.89 4.89 4.89 4.89 4.89 ...
-#>  $ date                            : Date[1:17315], format: "2020-05-16" "2020-05-16" ...
-#>  $ days_since_date                 : 'difftime' num [1:17315] 27 27 27 27 ...
+#>  $ extra_mortality_daily_country   : num [1:37907] 0.764 0 0.611 0.459 0 ...
+#>  $ extra_mortality_cumul_country   : num [1:37907] 1.12 1.12 1.13 1.13 1.13 ...
+#>  $ country_weight                  : num [1:37907] 0.0049 0.0049 0.0049 0.0049 0.0049 ...
+#>  $ extra_mortality_daily_world     : num [1:37907] 0.652 0 0.522 0.391 0 ...
+#>  $ extra_mortality_cumul_world     : num [1:37907] 0.956 0.957 0.962 0.964 0.967 ...
+#>  $ extra_mortality                 : num [1:37907] 8.56 8.56 8.56 8.56 8.56 ...
+#>  $ date                            : Date[1:37907], format: "2020-07-07" "2020-07-07" ...
+#>  $ days_since_date                 : 'difftime' num [1:37907] 118 118 118 118 ...
 #>   ..- attr(*, "units")= chr "days"
 ```
 
@@ -364,19 +337,19 @@ class(plot_plot)
 
 There are many limitation that directly stem from the data. For example:
 
-  - some countries (seem to under-report death by COVID19. This is
+-   some countries (seem to under-report death by COVID19. This is
     because for many deaths occurying outside hospitals the exact cause
     of death is not known. (We will be able to look at that when overall
     death rates will be known.)
 
-  - some countries are not included because either we have no data for
+-   some countries are not included because either we have no data for
     COVID19, or the population and mortality data are not in the
     database I am using. The latter is for example the case of Taiwan.
 
-  - the baseline mortality is based on **average** daily mortality from
-    2018.
+-   the baseline mortality is based on **average** daily mortality
+    from 2018.
 
-  - comorbidities are not accounted for.
+-   comorbidities are not accounted for.
 
 ## Developers corner
 
@@ -386,89 +359,90 @@ Here is my current R/computer configuration:
 devtools::session_info()
 #> ─ Session info ───────────────────────────────────────────────────────────────
 #>  setting  value                       
-#>  version  R version 4.0.0 (2020-04-24)
-#>  os       macOS Catalina 10.15.4      
-#>  system   x86_64, darwin17.0          
+#>  version  R version 4.0.3 (2020-10-10)
+#>  os       Arch Linux                  
+#>  system   x86_64, linux-gnu           
 #>  ui       X11                         
 #>  language (EN)                        
-#>  collate  en_US.UTF-8                 
-#>  ctype    en_US.UTF-8                 
+#>  collate  en_GB.UTF-8                 
+#>  ctype    en_GB.UTF-8                 
 #>  tz       Europe/Berlin               
-#>  date     2020-06-12                  
+#>  date     2020-11-02                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version    date       lib source                            
-#>  assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.0.0)                    
-#>  backports     1.1.7      2020-05-13 [1] CRAN (R 4.0.0)                    
-#>  callr         3.4.3      2020-03-28 [1] CRAN (R 4.0.0)                    
-#>  cellranger    1.1.0      2016-07-27 [1] CRAN (R 4.0.0)                    
-#>  cli           2.0.2      2020-02-28 [1] CRAN (R 4.0.0)                    
-#>  colorspace    1.4-1      2019-03-18 [1] CRAN (R 4.0.0)                    
-#>  coronaR     * 0.0.0.9000 2020-05-06 [1] local                             
-#>  countrycode   1.2.0      2020-05-22 [1] CRAN (R 4.0.0)                    
-#>  crayon        1.3.4      2017-09-16 [1] CRAN (R 4.0.0)                    
-#>  curl          4.3        2019-12-02 [1] CRAN (R 4.0.0)                    
-#>  desc          1.2.0      2018-05-01 [1] CRAN (R 4.0.0)                    
-#>  devtools      2.3.0      2020-04-10 [1] CRAN (R 4.0.0)                    
-#>  digest        0.6.25     2020-02-23 [1] CRAN (R 4.0.0)                    
-#>  dplyr         1.0.0      2020-05-29 [1] CRAN (R 4.0.0)                    
-#>  ellipsis      0.3.1      2020-05-15 [1] CRAN (R 4.0.0)                    
-#>  evaluate      0.14       2019-05-28 [1] CRAN (R 4.0.0)                    
-#>  fansi         0.4.1      2020-01-08 [1] CRAN (R 4.0.0)                    
-#>  farver        2.0.3      2020-01-16 [1] CRAN (R 4.0.0)                    
-#>  forcats       0.5.0      2020-03-01 [1] CRAN (R 4.0.0)                    
-#>  fs            1.4.1      2020-04-04 [1] CRAN (R 4.0.0)                    
-#>  generics      0.0.2      2018-11-29 [1] CRAN (R 4.0.0)                    
-#>  ggplot2       3.3.1      2020-05-28 [1] CRAN (R 4.0.0)                    
-#>  glue          1.4.1      2020-05-13 [1] CRAN (R 4.0.0)                    
-#>  gtable        0.3.0      2019-03-25 [1] CRAN (R 4.0.0)                    
-#>  htmltools     0.4.0      2019-10-04 [1] CRAN (R 4.0.0)                    
-#>  httr          1.4.1      2019-08-05 [1] CRAN (R 4.0.0)                    
-#>  jsonlite      1.6.1      2020-02-02 [1] CRAN (R 4.0.0)                    
-#>  knitr         1.28       2020-02-06 [1] CRAN (R 4.0.0)                    
-#>  lifecycle     0.2.0      2020-03-06 [1] CRAN (R 4.0.0)                    
-#>  lubridate     1.7.8      2020-04-06 [1] CRAN (R 4.0.0)                    
-#>  magrittr      1.5        2014-11-22 [1] CRAN (R 4.0.0)                    
-#>  memoise       1.1.0      2017-04-21 [1] CRAN (R 4.0.0)                    
-#>  munsell       0.5.0      2018-06-12 [1] CRAN (R 4.0.0)                    
-#>  pillar        1.4.4      2020-05-05 [1] CRAN (R 4.0.0)                    
-#>  pkgbuild      1.0.8      2020-05-07 [1] CRAN (R 4.0.0)                    
-#>  pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.0.0)                    
-#>  pkgload       1.1.0      2020-05-29 [1] CRAN (R 4.0.0)                    
-#>  prettyunits   1.1.1      2020-01-24 [1] CRAN (R 4.0.0)                    
-#>  processx      3.4.2      2020-02-09 [1] CRAN (R 4.0.0)                    
-#>  ps            1.3.3      2020-05-08 [1] CRAN (R 4.0.0)                    
-#>  purrr         0.3.4      2020-04-17 [1] CRAN (R 4.0.0)                    
-#>  R6            2.4.1      2019-11-12 [1] CRAN (R 4.0.0)                    
-#>  Rcpp          1.0.4.6    2020-04-09 [1] CRAN (R 4.0.0)                    
-#>  readxl        1.3.1      2019-03-13 [1] CRAN (R 4.0.0)                    
-#>  remotes       2.1.1      2020-02-15 [1] CRAN (R 4.0.0)                    
-#>  rlang         0.4.6      2020-05-02 [1] CRAN (R 4.0.0)                    
-#>  rmarkdown     2.2        2020-05-31 [1] CRAN (R 4.0.0)                    
-#>  rprojroot     1.3-2      2018-01-03 [1] CRAN (R 4.0.0)                    
-#>  scales        1.1.1      2020-05-11 [1] CRAN (R 4.0.0)                    
-#>  sessioninfo   1.1.1      2018-11-05 [1] CRAN (R 4.0.0)                    
-#>  stringi       1.4.6      2020-02-17 [1] CRAN (R 4.0.0)                    
-#>  stringr       1.4.0      2019-02-10 [1] CRAN (R 4.0.0)                    
-#>  testthat      2.3.2      2020-03-02 [1] CRAN (R 4.0.0)                    
-#>  tibble        3.0.1      2020-04-20 [1] CRAN (R 4.0.0)                    
-#>  tidyr         1.1.0      2020-05-20 [1] CRAN (R 4.0.0)                    
-#>  tidyselect    1.1.0      2020-05-11 [1] CRAN (R 4.0.0)                    
-#>  usethis       1.6.1      2020-04-29 [1] CRAN (R 4.0.0)                    
-#>  utf8          1.1.4      2018-05-24 [1] CRAN (R 4.0.0)                    
-#>  vctrs         0.3.1      2020-06-05 [1] CRAN (R 4.0.0)                    
-#>  wbstats       1.0.0      2020-05-17 [1] Github (nset-ornl/wbstats@5501b8c)
-#>  withr         2.2.0      2020-04-20 [1] CRAN (R 4.0.0)                    
-#>  xfun          0.14       2020-05-20 [1] CRAN (R 4.0.0)                    
-#>  yaml          2.2.1      2020-02-01 [1] CRAN (R 4.0.0)                    
+#>  assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.0.2)                    
+#>  backports     1.1.10     2020-09-15 [1] CRAN (R 4.0.2)                    
+#>  callr         3.5.1      2020-10-13 [1] CRAN (R 4.0.3)                    
+#>  cellranger    1.1.0      2016-07-27 [1] CRAN (R 4.0.2)                    
+#>  cli           2.1.0      2020-10-12 [1] CRAN (R 4.0.3)                    
+#>  colorspace    1.4-1      2019-03-18 [1] CRAN (R 4.0.2)                    
+#>  coronaR     * 0.0.0.9000 2020-11-02 [1] local                             
+#>  countrycode   1.2.0      2020-05-22 [1] CRAN (R 4.0.2)                    
+#>  crayon        1.3.4      2017-09-16 [1] CRAN (R 4.0.2)                    
+#>  curl          4.3        2019-12-02 [1] CRAN (R 4.0.2)                    
+#>  desc          1.2.0      2018-05-01 [1] CRAN (R 4.0.2)                    
+#>  devtools      2.3.2      2020-09-18 [1] CRAN (R 4.0.2)                    
+#>  digest        0.6.27     2020-10-24 [1] CRAN (R 4.0.3)                    
+#>  dplyr         1.0.2.9000 2020-11-01 [1] Github (tidyverse/dplyr@20e768c)  
+#>  ellipsis      0.3.1      2020-05-15 [1] CRAN (R 4.0.2)                    
+#>  evaluate      0.14       2019-05-28 [1] CRAN (R 4.0.2)                    
+#>  fansi         0.4.1      2020-01-08 [1] CRAN (R 4.0.2)                    
+#>  farver        2.0.3      2020-01-16 [1] CRAN (R 4.0.2)                    
+#>  forcats       0.5.0      2020-03-01 [1] CRAN (R 4.0.2)                    
+#>  fs            1.5.0      2020-07-31 [1] CRAN (R 4.0.2)                    
+#>  generics      0.1.0      2020-10-31 [1] CRAN (R 4.0.3)                    
+#>  ggplot2       3.3.2      2020-06-19 [1] CRAN (R 4.0.2)                    
+#>  glue          1.4.2      2020-08-27 [1] CRAN (R 4.0.2)                    
+#>  gtable        0.3.0      2019-03-25 [1] CRAN (R 4.0.2)                    
+#>  htmltools     0.5.0      2020-06-16 [1] CRAN (R 4.0.2)                    
+#>  httr          1.4.2      2020-07-20 [1] CRAN (R 4.0.2)                    
+#>  jsonlite      1.7.1      2020-09-07 [1] CRAN (R 4.0.2)                    
+#>  knitr         1.30       2020-09-22 [1] CRAN (R 4.0.2)                    
+#>  lifecycle     0.2.0      2020-03-06 [1] CRAN (R 4.0.2)                    
+#>  lubridate     1.7.9      2020-06-08 [1] CRAN (R 4.0.2)                    
+#>  magrittr      1.5        2014-11-22 [1] CRAN (R 4.0.2)                    
+#>  memoise       1.1.0      2017-04-21 [1] CRAN (R 4.0.2)                    
+#>  munsell       0.5.0      2018-06-12 [1] CRAN (R 4.0.2)                    
+#>  pillar        1.4.6      2020-07-10 [1] CRAN (R 4.0.2)                    
+#>  pkgbuild      1.1.0      2020-07-13 [1] CRAN (R 4.0.2)                    
+#>  pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.0.2)                    
+#>  pkgload       1.1.0      2020-05-29 [1] CRAN (R 4.0.2)                    
+#>  prettyunits   1.1.1      2020-01-24 [1] CRAN (R 4.0.2)                    
+#>  processx      3.4.4      2020-09-03 [1] CRAN (R 4.0.2)                    
+#>  ps            1.4.0      2020-10-07 [1] CRAN (R 4.0.2)                    
+#>  purrr         0.3.4      2020-04-17 [1] CRAN (R 4.0.2)                    
+#>  R6            2.5.0      2020-10-28 [1] CRAN (R 4.0.3)                    
+#>  Rcpp          1.0.5      2020-07-06 [1] CRAN (R 4.0.2)                    
+#>  readxl        1.3.1      2019-03-13 [1] CRAN (R 4.0.2)                    
+#>  remotes       2.2.0      2020-07-21 [1] CRAN (R 4.0.2)                    
+#>  rlang         0.4.8      2020-10-08 [1] CRAN (R 4.0.3)                    
+#>  rmarkdown     2.5        2020-10-21 [1] CRAN (R 4.0.3)                    
+#>  rprojroot     1.3-2      2018-01-03 [1] CRAN (R 4.0.2)                    
+#>  scales        1.1.1      2020-05-11 [1] CRAN (R 4.0.2)                    
+#>  sessioninfo   1.1.1      2018-11-05 [1] CRAN (R 4.0.2)                    
+#>  stringi       1.5.3      2020-09-09 [1] CRAN (R 4.0.2)                    
+#>  stringr       1.4.0      2019-02-10 [1] CRAN (R 4.0.2)                    
+#>  testthat      3.0.0      2020-10-31 [1] CRAN (R 4.0.3)                    
+#>  tibble        3.0.4      2020-10-12 [1] CRAN (R 4.0.3)                    
+#>  tidyr         1.1.2      2020-08-27 [1] CRAN (R 4.0.2)                    
+#>  tidyselect    1.1.0      2020-05-11 [1] CRAN (R 4.0.2)                    
+#>  usethis       1.6.3      2020-09-17 [1] CRAN (R 4.0.2)                    
+#>  utf8          1.1.4      2018-05-24 [1] CRAN (R 4.0.2)                    
+#>  vctrs         0.3.4      2020-08-29 [1] CRAN (R 4.0.2)                    
+#>  wbstats       1.0.1.9000 2020-11-02 [1] Github (nset-ornl/wbstats@310de68)
+#>  withr         2.3.0      2020-09-22 [1] CRAN (R 4.0.2)                    
+#>  xfun          0.19       2020-10-30 [1] CRAN (R 4.0.3)                    
+#>  yaml          2.2.1      2020-02-01 [1] CRAN (R 4.0.2)                    
 #> 
-#> [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
+#> [1] /home/alex/R/x86_64-pc-linux-gnu-library/4.0
+#> [2] /usr/lib/R/library
 ```
 
-## Help & feedbacks wanted\!
+## Help & feedbacks wanted!
 
 If you find that this project interesting an idea worth pursuing, please
 let me know by liking, RT or messaging on Twitter (@alexcourtiol).
 
 Developing is always more fun when it becomes a collaborative work, so
-please also email me (or leave an issue) if you want to get involved\!
+please also email me (or leave an issue) if you want to get involved!
