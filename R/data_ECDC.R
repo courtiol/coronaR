@@ -69,13 +69,13 @@ prepare_data_ECDC <- function(date_of_report = Sys.Date(), path_save_data = NULL
                      continent = unique(continent),
                      iso2c = unique(iso2c),
                      continentexp = unique(continentexp),
-                     popdata2018 = unique(popdata2018)) %>%
+                     popdata2019 = unique(popdata2019)) %>%
     tidyr::unnest(cols = date_report) %>%
     dplyr::mutate(date_report = as.Date(date_report, origin = "1970-01-01")) -> full_country_dates
 
   data_COVID_raw2 %>%
     dplyr::mutate(date_report = as.Date(.data$daterep)) %>%
-    dplyr::right_join(full_country_dates, by = c("country", "popdata2018", "continentexp", "iso2c", "continent", "date_report")) %>%
+    dplyr::right_join(full_country_dates, by = c("country", "popdata2019", "continentexp", "iso2c", "continent", "date_report")) %>%
     dplyr::mutate(days_since_report = !!date_of_report - as.Date(.data$date_report)) %>%
     dplyr::group_by(.data$country) %>%
     dplyr::mutate(date_report_last = max(.data$date_report, na.rm =  TRUE)) %>%
